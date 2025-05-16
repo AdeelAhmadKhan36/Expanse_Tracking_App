@@ -77,7 +77,6 @@ class _Home_ScreenState extends State<Home_Screen> {
           ),
         ],
         centerTitle: true,
-        backgroundColor: Colors.indigoAccent,
       ),
       body: Column(
         children: [
