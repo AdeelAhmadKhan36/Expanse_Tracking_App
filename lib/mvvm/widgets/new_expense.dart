@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 
 import '../model/expense_model.dart';
 class new_Expanse_Screen extends StatefulWidget {
-  const new_Expanse_Screen({super.key});
+
+
+  final void Function (Expanse expanse) onAddExpense;
+   new_Expanse_Screen( {super.key, required this.onAddExpense});
 
   @override
   State<new_Expanse_Screen> createState() => _new_Expanse_ScreenState();
@@ -14,9 +17,7 @@ class _new_Expanse_ScreenState extends State<new_Expanse_Screen> {
   TextEditingController titleController= TextEditingController();
   TextEditingController amountController= TextEditingController();
   Category _selectedCategory=Category.leisure;
-  // void _saveTitleInput(String inputTitle){
-  //         _enteredTitle=inputTitle;
-  // }
+
 
   void _presentDatePicker()async{
     final now=DateTime.now();
@@ -33,6 +34,69 @@ class _new_Expanse_ScreenState extends State<new_Expanse_Screen> {
      _selectDate=pickedDate;
    });
   }
+  void _submitExpanseData() {
+    final enteredAmount = double.tryParse(amountController.text);
+    final amountIsInvalid = enteredAmount == null || enteredAmount <= 0;
+    print("Title: ${titleController.text}");
+    print("Amount: ${amountController.text}");
+    print("Date: $_selectDate");
+
+
+    if (titleController.text.trim().isEmpty || amountIsInvalid || _selectDate == null) {
+      showDialog(
+        context: context,
+        builder: (ctx) {
+          return AlertDialog(
+
+            title: Text("Invalid Input"),
+            content: Text("Please enter a valid title, amount, and date."),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text("OK"),
+              ),
+            ],
+          );
+        },
+      );
+      return;
+    }
+
+    // Add expense
+    widget.onAddExpense(
+      Expanse(
+        title: titleController.text,
+        amount: enteredAmount,
+        date: _selectDate!,
+        category: _selectedCategory,
+      ),
+    );
+
+    // ✅ Show success message
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text("Expense added successfully!"),
+        backgroundColor: Colors.green,
+      ),
+    );
+
+    // ✅ Optionally clear the fields
+    titleController.clear();
+    amountController.clear();
+    setState(() {
+      _selectDate = null;
+      _selectedCategory = Category.leisure;
+    });
+
+    // Optionally close the modal if needed
+    Navigator.pop(context);
+  }
+
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -79,6 +143,8 @@ class _new_Expanse_ScreenState extends State<new_Expanse_Screen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               DropdownButton(
+                  value: _selectedCategory,
+
 
                   items: Category.values.map(
 
@@ -95,7 +161,7 @@ class _new_Expanse_ScreenState extends State<new_Expanse_Screen> {
                         }
                         setState(() {
 
-                          Category.work=value;
+                          _selectedCategory=value;
                         });
 
                   }),
@@ -113,6 +179,7 @@ class _new_Expanse_ScreenState extends State<new_Expanse_Screen> {
 
               ElevatedButton(onPressed: (){
                 print(_enteredTitle);
+                _submitExpanseData();
 
               },
                   style: ElevatedButton.styleFrom(

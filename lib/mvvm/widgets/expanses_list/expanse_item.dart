@@ -7,27 +7,40 @@ class ExpanseItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
+    return SizedBox(
+      height: 100,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 2.0),
+        child: Card(
+          color: Colors.indigo,
 
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(expanse.title),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(expanse.amount.toString()),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(expanse.title, style: TextStyle(color: Colors.white),),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(expanse.amount.toString(),style: TextStyle(color: Colors.white)),
 
-              Row(
-                children: [
-                  Icon(catagoryIcon[expanse.category]),
-                  Text(expanse.formattedDate),
-                ],
-              ),
-            ],
+                    Center(
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(catagoryIcon[expanse.category],color: Colors.white,),
+                          Text(expanse.formattedDate,style: TextStyle(color: Colors.white)),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+
+              ],
+            ),
           ),
-
-        ],
+        ),
       ),
     );
   }
