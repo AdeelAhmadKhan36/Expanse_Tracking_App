@@ -1,6 +1,7 @@
 import 'package:expense_tracking/mvvm/model/expense_model.dart';
 import 'package:flutter/material.dart';
 
+import '../widgets/chart/chart.dart';
 import '../widgets/expanses_list/expanse_list.dart' show ExpanseList;
 import '../widgets/new_expense.dart';
 
@@ -80,6 +81,7 @@ class _Home_ScreenState extends State<Home_Screen> {
       ),
       body: Column(
         children: [
+          Chart(expenses: _registeredExpenses ,),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(

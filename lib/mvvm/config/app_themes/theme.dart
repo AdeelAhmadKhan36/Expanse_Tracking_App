@@ -4,17 +4,17 @@ final ThemeData appTheme = ThemeData(
   useMaterial3: true,
 
   // Whole App Colors
-  scaffoldBackgroundColor: Colors.white,
+  scaffoldBackgroundColor: Colors.black,
 
   // AppBar Style
   appBarTheme: AppBarTheme(
-    backgroundColor: Colors.indigo,
+    backgroundColor: Colors.teal,
     foregroundColor: Colors.white,
   ),
 
   // Card Style
   cardTheme: CardTheme(
-    color: Colors.indigoAccent,
+    color: Colors.teal,
     // margin: EdgeInsets.all(10),
     elevation: 4,
     shape: RoundedRectangleBorder(
@@ -26,5 +26,34 @@ final ThemeData appTheme = ThemeData(
   textTheme: TextTheme(
     bodyLarge: TextStyle(color: Colors.white, fontSize: 18),
     bodyMedium: TextStyle(color: Colors.black87),
+  ),
+
+
+);
+
+
+final kColorScheme = ColorScheme.fromSeed(seedColor: Colors.deepPurple);
+final kDarkColorScheme = ColorScheme.fromSeed(
+  seedColor: Colors.deepPurple,
+  brightness: Brightness.dark,
+);
+
+final ThemeData lightTheme = ThemeData(
+  useMaterial3: true,
+  colorScheme: kColorScheme,
+  scaffoldBackgroundColor: Colors.white,
+  appBarTheme: AppBarTheme(
+    backgroundColor: kColorScheme.primaryContainer,
+    foregroundColor: Colors.white,
+  ),
+);
+
+final ThemeData darkTheme = ThemeData(
+  useMaterial3: true,
+  colorScheme: kDarkColorScheme,
+  scaffoldBackgroundColor: Colors.black,
+  appBarTheme: AppBarTheme(
+    backgroundColor: kDarkColorScheme.primaryContainer,
+    foregroundColor: Colors.white,
   ),
 );
